@@ -10,22 +10,7 @@ var SessionStore = require('../../../stores/SessionStore');
 
 var CredentialsAuthForm = React.createClass({
 
-  mixins: [Navigation, CredentialsFormMixin],
-
-  componentDidMount: function() {
-    SessionStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    SessionStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function(r) {
-    console.warn(r);
-    // this.transitionTo('/');
-  },
-
-
+  mixins: [CredentialsFormMixin],
 
   propTypes: {
     onSubmit: ReactPropTypes.func.isRequired

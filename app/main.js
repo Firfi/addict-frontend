@@ -1,4 +1,7 @@
 /** @jsx React.DOM */
+
+require('./utils/Utils');
+
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -8,7 +11,9 @@ var Link = Router.Link;
 var SignIn = require('./components/auth/SignIn.react.js');
 var SignUp = require('./components/auth/SignUp.react.js');
 var Index = require('./components/Index.react.js');
-require('./utils/Utils');
+var JournalBase = require('./components/JournalBase.react.js');
+var Journal = require('./components/Journal.react.js');
+
 
 var App = React.createClass({
   render: function () {
@@ -19,7 +24,7 @@ var App = React.createClass({
             <li><Link to="index">Index</Link></li>
             <li><Link to="signin">Sign In</Link></li>
             <li><Link to="signup">Sign Up</Link></li>
-            <li><Link to="diary">My diary</Link></li>
+            <li><Link to="journal">My journal</Link></li>
           </ul>
         </header>
         <RouteHandler/>
@@ -36,9 +41,9 @@ var routes = (
     <Route name="signin" handler={SignIn} />
     <Route name="signup" handler={SignUp} />
     <Route name="index" handler={Index} />
-    <Route name="journal" handler={Journal}
-      <Route name="user" path=":user" handler={Journal} />
-    />
+    <Route name="journal" handler={JournalBase}>
+      <Route name="user" path=":user"  handler={Journal} />
+    </Route>
   </Route>
 );
 

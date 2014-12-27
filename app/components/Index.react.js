@@ -14,7 +14,7 @@ var Index = React.createClass({
   },
 
   componentWillMount: function() {
-    AuthActionCreators
+    //AuthActionCreators
     SessionStore.addChangeListener(this._onChange);
   },
 

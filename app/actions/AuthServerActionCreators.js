@@ -8,12 +8,12 @@ var handleCredentialsAction = function(typ, errTyp) {
   return function(error, response) {
     if (error) {
       AppDispatcher.handleServerAction({
-        actionType: errTyp,
+        type: errTyp,
         error: error
       });
     } else {
       AppDispatcher.handleServerAction({
-        actionType: typ,
+        type: typ,
         response: response
       });
     }

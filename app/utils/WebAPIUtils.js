@@ -1,4 +1,5 @@
 var SessionStore = require('../stores/SessionStore');
+var $ = require('jquery');
 
 var request = require('request').defaults({
   json: true
@@ -23,21 +24,31 @@ SessionStore.addChangeListener(function() {
   token = SessionStore.getToken();
 });
 
+var post = function(url, data) {
+  return $.ajax({
+    url: url,
+    type: 'POST',
+    data: JSON.stringify(data),
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json'
+  })
+};
+
 module.exports = {
 
   credentialsAuth: function(data) {
     data = mapCredentialsDomain(data);
-    request.post({uri: makeUrl('authenticate/credentials'), json: data}).on('response', function(r) {
+    post(makeUrl('authenticate/credentials'),  data).done(function(r) {
       AuthServerActionCreators.credentialsAuthBackend(null, r);
-    }).on('error', function(e) {
-      AuthServerActionCreators.credentialsSignUpBackend(e);
+    }).fail(function(e) {
+      AuthServerActionCreators.credentialsAuthBackend(e);
     });
   },
 
   credentialsSignUp: function(data) {
     data = mapCredentialsDomain(data);
-    request.post({uri: makeUrl('signUp'), json: data}).on('response', function(r) {
-      AuthServerActionCreators.credentialsSignUpBackend(null, r);
+    request.post({uri: makeUrl('signUp'), json: data}).on('response', function(r, b) {
+      AuthServerActionCreators.credentialsSignUpBackend(null, b);
     }).on('error', function(e) {
       AuthServerActionCreators.credentialsSignUpBackend(e);
     });

@@ -12,12 +12,11 @@ var CHANGE_EVENT = 'change';
 var SessionStore = assign({}, EventEmitter.prototype, {
 
   getToken: function() {
-    // TODO cache it locally
     return (localStorage.getObject('auth') || {}).token;
   },
 
   getProfile: function() {
-    return profile;
+    return (localStorage.getObject('auth') || {}).profile;
   },
 
   emitChange: function() {
@@ -43,18 +42,21 @@ var handleAuthenticated = function(action) {
 
 SessionStore.dispatchToken = AppDispatcher.register(function(payload) {
 
+
   var action = payload.action;
 
   switch(action.type) {
 
     case ActionTypes.CREDENTIALS_AUTH_BACKEND:
-      SessionStore.emitChange();
       handleAuthenticated(action);
+      SessionStore.emitChange();
+
       break;
 
     case ActionTypes.CREDENTIALS_SIGNUP_BACKEND:
-      SessionStore.emitChange();
       handleAuthenticated(action);
+      SessionStore.emitChange();
+
       break;
 
   }

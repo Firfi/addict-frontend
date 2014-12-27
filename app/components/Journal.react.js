@@ -1,17 +1,18 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var AuthActionCreators = require('../../actions/AuthActionCreators');
-var CredentialsAuthForm = require('./credentials/CredentialsAuthForm.react.js');
-
+var AuthenticatedAwareComponentMixin = require('./auth/AuthenticatedAwareComponentMixin.react.js');
+var Router = require('react-router');
+var Navigation = Router.Navigation;
 
 
 var Journal = React.createClass({
 
+  mixins: ['AuthenticatedAwareComponentMixin'],
+
   render: function() {
     return (
       <div>
-      SignIn
-        <CredentialsAuthForm onSubmit={this.handleCredentialsSubmit} />
+      Journal of {this.state.session.profile}
       </div>
     );
   }
